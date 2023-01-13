@@ -1,21 +1,34 @@
 package com.example.basededatosrom.modelo.db.entidades;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "ruta")
-
+@Entity(tableName = "ruta",
+        foreignKeys = {
+                @ForeignKey(entity=Lugar.class,
+                parentColumns = "id_lugar",
+                childColumns = "origen",
+                onDelete =  CASCADE),
+                @ForeignKey(entity=Lugar.class,
+                parentColumns = "id_lugar",
+                childColumns = "destino",
+                onDelete =  CASCADE)
+        }
+)
 public class Ruta {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name= "id_ruta")
     private int id_ruta;
     @ColumnInfo(name= "origen")
-    private String origen;
+    private int origen;
     @ColumnInfo(name= "destino")
-    private String destino;
+    private int destino;
 
-    public Ruta(String origen, String destino) {
+    public Ruta(int origen, int destino) {
         this.origen = origen;
         this.destino = destino;
     }
@@ -28,19 +41,19 @@ public class Ruta {
         this.id_ruta = id_ruta;
     }
 
-    public String getOrigen() {
+    public int getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen) {
+    public void setOrigen(int origen) {
         this.origen = origen;
     }
 
-    public String getDestino() {
+    public int getDestino() {
         return destino;
     }
 
-    public void setDestino(String destino) {
+    public void setDestino(int destino) {
         this.destino = destino;
     }
 }

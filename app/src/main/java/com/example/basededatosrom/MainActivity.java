@@ -41,13 +41,19 @@ public class MainActivity extends AppCompatActivity {
         AppDb conexion=AppDb.getAppOb(getApplicationContext());
 
         //Metemos la lista de la base de datos
+        /*
         for(String ciudad:ciudades){
             conexion.getDaoLugar().insertLugar(new Lugar(ciudad));
         }
+         */
+        Lugar l1=new Lugar(ciudades[0]);
+        conexion.getDaoLugar().insertLugar(l1);
+        Lugar l2=new Lugar(ciudades[1]);
+        conexion.getDaoLugar().insertLugar(l2);
 
         //Insertamos rutas en la base de datos
-        conexion.getDaoRuta().insertRuta(new Ruta(ciudades[0],ciudades[1]));
-        conexion.getDaoRuta().insertRuta(new Ruta(ciudades[1],ciudades[0]));
+        Ruta r=new Ruta(l1.getId_lugar(),l2.getId_lugar());
+        conexion.getDaoRuta().insertRuta(r);
 
 
         //Guardamos los lugares de la bd en una lista
@@ -70,16 +76,16 @@ public class MainActivity extends AppCompatActivity {
         l.setDescripcion("Tiene un color especial");
         conexion.getDaoLugar().updateLugar(l);
         //Modificar una ruta
-        Ruta r=conexion.getDaoRuta().verRutaByDestino("Huelva");
-        r.setDestino("¿Donde caemos gente?");
-        conexion.getDaoRuta().updateRuta(r);
+        //Ruta r=conexion.getDaoRuta().verRutaByDestino("Huelva");
+        //r.setDestino("¿Donde caemos gente?");
+        //conexion.getDaoRuta().updateRuta(r);
 
         //Guardamos los lugares de la bd en una lista
         lugares=conexion.getDaoLugar().verLugar();
         //Guradamos las rutas de la bd en una lista
         rutas=conexion.getDaoRuta().verRuta();
         //Eliminamos una ruta
-        conexion.getDaoRuta().deleteRuta(new Ruta(ciudades[0],ciudades[1]));
+        //conexion.getDaoRuta().deleteRuta(new Ruta(ciudades[0],ciudades[1]));
 
         //Mostrar los lugares
         for(Lugar lugar:lugares){

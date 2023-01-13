@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.basededatosrom.modelo.db.entidades.Lugar;
 import com.example.basededatosrom.modelo.db.entidades.Ruta;
 
 import java.util.List;
@@ -33,4 +34,5 @@ public interface DaoRuta {
     //Buscar por id
     @Query("select * from ruta where id_ruta like :id")
     List<Ruta> verRutaById(int id);
+
 }
