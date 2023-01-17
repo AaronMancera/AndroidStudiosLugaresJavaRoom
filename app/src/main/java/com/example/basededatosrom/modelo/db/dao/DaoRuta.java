@@ -24,10 +24,11 @@ public interface DaoRuta {
     void deleteRuta(Ruta ruta);
     //Buscar por origen
     @Query("select * from ruta where origen like :origen")
-    Ruta verRutaByOrigen(String origen);
+    Ruta verRutaByOrigen(int origen);
     //Buscar por destino
     @Query("select * from ruta where origen like :destino")
-    Ruta verRutaByDestino(String destino);
+    Ruta verRutaByDestino(int destino);
+
     //Busca todas las rutas
     @Query("select * from ruta")
     List<Ruta> verRuta();

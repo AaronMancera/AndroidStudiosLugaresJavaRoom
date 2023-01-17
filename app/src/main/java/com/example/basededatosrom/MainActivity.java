@@ -51,8 +51,13 @@ public class MainActivity extends AppCompatActivity {
         Lugar l2=new Lugar(ciudades[1]);
         conexion.getDaoLugar().insertLugar(l2);
 
+        //Para insertar la fk tenemos que recoger el lugar de la base de datos mediante una query
+        l1=conexion.getDaoLugar().verLugarByName(l1.getNombre());
+        l2=conexion.getDaoLugar().verLugarByName(l2.getNombre());
+
         //Insertamos rutas en la base de datos
-        Ruta r=new Ruta(l1.getId_lugar(),l2.getId_lugar());
+        Ruta r=new Ruta(l1.getId_lugar()
+                ,l2.getId_lugar());
         conexion.getDaoRuta().insertRuta(r);
 
 
@@ -60,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
         List<Lugar> lugares=conexion.getDaoLugar().verLugar();
         //Guardamos las rutas de la bd en una lista
         List<Ruta> rutas=conexion.getDaoRuta().verRuta();
-        //Mostrar los lugares
+        //Mostrar los lugares recogiedos de la base de datos
         for(Lugar lugar:lugares){
             Log.d("room","Guardado -> Lugar: "+lugar.getNombre());
         }
-        //Mostrar las rutas
+        //Mostrar las rutas recogiedos de la base de datos
         for(Ruta ruta:rutas){
             Log.d("room","Guardado -> Origen: "+ruta.getOrigen() +" Destino: "+ruta.getDestino());
         }
@@ -76,16 +81,19 @@ public class MainActivity extends AppCompatActivity {
         l.setDescripcion("Tiene un color especial");
         conexion.getDaoLugar().updateLugar(l);
         //Modificar una ruta
-        //Ruta r=conexion.getDaoRuta().verRutaByDestino("Huelva");
-        //r.setDestino("¿Donde caemos gente?");
-        //conexion.getDaoRuta().updateRuta(r);
+        r=conexion.getDaoRuta().verRutaByDestino(1);
+        Lugar nuevoLugar=new Lugar("¿Donde caemos gente?");
+        conexion.getDaoLugar().insertLugar(nuevoLugar);
+        nuevoLugar=conexion.getDaoLugar().verLugarByName(nuevoLugar.getNombre());
+        r.setDestino(nuevoLugar.getId_lugar());
+        conexion.getDaoRuta().updateRuta(r);
 
         //Guardamos los lugares de la bd en una lista
         lugares=conexion.getDaoLugar().verLugar();
         //Guradamos las rutas de la bd en una lista
         rutas=conexion.getDaoRuta().verRuta();
         //Eliminamos una ruta
-        //conexion.getDaoRuta().deleteRuta(new Ruta(ciudades[0],ciudades[1]));
+        conexion.getDaoRuta().deleteRuta(r);
 
         //Mostrar los lugares
         for(Lugar lugar:lugares){

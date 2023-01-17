@@ -2,9 +2,12 @@ package com.example.basededatosrom.modelo.db;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.basededatosrom.modelo.db.dao.DaoLugar;
 import com.example.basededatosrom.modelo.db.dao.DaoRuta;
@@ -24,10 +27,20 @@ public abstract class AppDb extends RoomDatabase {
             INSTANCE= Room.databaseBuilder(context.getApplicationContext(),
                     AppDb.class,
                     "rutasbd")
+                    //.addMigrations(MIGRATION_1_2)
                     .allowMainThreadQueries().build();
         }
         return  INSTANCE;
     }
+    /*
+    //
+    static final Migration MIGRATION_1_2 = new Migration(1,2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE tabla (id INTEGER)");
+        }
+    }
 
+     */
     public static void destroyInstance(){INSTANCE=null;}
 }

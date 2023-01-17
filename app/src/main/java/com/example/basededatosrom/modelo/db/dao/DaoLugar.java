@@ -39,6 +39,6 @@ public interface DaoLugar {
 
     //Busca por id
     @Query("select * from lugar where id_lugar like :id")
-    List<Lugar> verLugarById(int id);
+    Lugar verLugarById(int id);
 
 }
