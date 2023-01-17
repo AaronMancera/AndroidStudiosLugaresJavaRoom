@@ -16,6 +16,8 @@ import androidx.room.PrimaryKey;
                 @ForeignKey(entity=Lugar.class,
                 parentColumns = "id_lugar",
                 childColumns = "destino",
+                //Por si el import no funciona bien
+                //onDelete = ForeignKey.CASCADE)
                 onDelete =  CASCADE)
         }
 )

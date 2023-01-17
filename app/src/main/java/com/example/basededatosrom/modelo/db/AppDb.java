@@ -27,20 +27,22 @@ public abstract class AppDb extends RoomDatabase {
             INSTANCE= Room.databaseBuilder(context.getApplicationContext(),
                     AppDb.class,
                     "rutasbd")
-                    //.addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2)
                     .allowMainThreadQueries().build();
         }
         return  INSTANCE;
     }
-    /*
+
     //
     static final Migration MIGRATION_1_2 = new Migration(1,2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE tabla (id INTEGER)");
+            database.execSQL("CREATE TABLE avion (id_avion INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,nombre VARCHAR(255),descripcion VARCHAR(255))");
+            database.execSQL("CREATE TABLE rutaAvion(id_ruta INTEGER NOT NULL, id_avion INTEGER NOT NULL, PRIMARY KEY(id_ruta,id_avion), FOREIGN KEY(id_ruta) REFERENCES ruta(id_ruta),FOREIGN KEY(id_avion) REFERENCES avion(id_avion))");
         }
-    }
+    };
 
-     */
+
+
     public static void destroyInstance(){INSTANCE=null;}
 }
