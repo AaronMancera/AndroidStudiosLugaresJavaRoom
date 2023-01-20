@@ -7,7 +7,10 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.basededatosrom.modelo.db.entidades.Avion;
+import com.example.basededatosrom.modelo.db.entidades.Ruta;
 import com.example.basededatosrom.modelo.db.entidades.RutaAvion;
+
+import java.util.List;
 
 @Dao
 public interface DaoRutaAvion {
@@ -27,9 +30,9 @@ public interface DaoRutaAvion {
     void borrarRutaAvion();
     //Ver todos los rutaAvion
     @Query("SELECT * FROM rutaAvion")
-    void verAvionRuta();
+    List<RutaAvion> verAvionRuta();
     //Ver a una ruta avion completa
     @Query("SELECT * FROM ruta INNER JOIN avion ON ruta.id_ruta=avion.id_avion WHERE ruta.id_ruta=:id_ruta AND avion.id_avion=:id_avion")
-    void verAvionRutaByIds(int id_ruta,int id_avion);
+    List<Ruta> verAvionRutaByIds(int id_ruta, int id_avion);
 
 }

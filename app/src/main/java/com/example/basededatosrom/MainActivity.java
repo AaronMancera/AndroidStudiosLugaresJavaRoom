@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.basededatosrom.modelo.db.AppDb;
+import com.example.basededatosrom.modelo.db.entidades.Avion;
 import com.example.basededatosrom.modelo.db.entidades.Lugar;
 import com.example.basededatosrom.modelo.db.entidades.Ruta;
 import com.google.android.material.snackbar.Snackbar;
@@ -103,7 +104,17 @@ public class MainActivity extends AppCompatActivity {
         for(Ruta ruta:rutas){
             Log.d("room","Guardado -> Origen: "+ruta.getOrigen() +" Destino: "+ruta.getDestino());
         }
-
+        
+        //Creamos un avion
+        Avion avion=new Avion("Avion 1");
+        avion.setDescripcion("Un piloto sin licencia");
+        conexion.getDaoAvion().insertAvion(avion);
+        //Recogemos los aviones
+        List<Avion> aviones=conexion.getDaoAvion().verAvion();
+        //Visualizamos lo insertado
+        for(Avion a:aviones){
+            Log.d("room","Guardado avion ->"+a.getNombre());
+        }
     }
 
     @Override
