@@ -27,6 +27,11 @@ public class RutaAvion {
         @ColumnInfo(name = "id_avion")
         private int id_avion;
 
+        public RutaAvion(int id_ruta, int id_avion) {
+                this.id_ruta = id_ruta;
+                this.id_avion = id_avion;
+        }
+
         public int getId_ruta() {
                 return id_ruta;
         }

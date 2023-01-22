@@ -9,6 +9,7 @@ import com.example.basededatosrom.modelo.db.AppDb;
 import com.example.basededatosrom.modelo.db.entidades.Avion;
 import com.example.basededatosrom.modelo.db.entidades.Lugar;
 import com.example.basededatosrom.modelo.db.entidades.Ruta;
+import com.example.basededatosrom.modelo.db.entidades.RutaAvion;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -93,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
         lugares=conexion.getDaoLugar().verLugar();
         //Guradamos las rutas de la bd en una lista
         rutas=conexion.getDaoRuta().verRuta();
-        //Eliminamos una ruta
-        conexion.getDaoRuta().deleteRuta(r);
+
 
         //Mostrar los lugares
         for(Lugar lugar:lugares){
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         for(Ruta ruta:rutas){
             Log.d("room","Guardado -> Origen: "+ruta.getOrigen() +" Destino: "+ruta.getDestino());
         }
+
         
         //Creamos un avion
         Avion avion=new Avion("Avion 1");
@@ -115,6 +116,24 @@ public class MainActivity extends AppCompatActivity {
         for(Avion a:aviones){
             Log.d("room","Guardado avion ->"+a.getNombre());
         }
+        Avion a=conexion.getDaoAvion().verAvionByName("Avion 1");
+        Log.d("room","Guardado avion buscado ->"+a.getNombre());
+        Ruta ru=conexion.getDaoRuta().verRutaByOrigen(1);
+        Log.d("room","Prueba ->"+ru.getId_ruta());
+        Log.d("room","Prueba ->"+a.getId_avion());
+        List<RutaAvion> eliminacionDeRutasAvion=conexion.getDaoRutaAvion().verAvionRuta();
+        for(RutaAvion ra:eliminacionDeRutasAvion){
+            conexion.getDaoRutaAvion().deleteRutaAvion(ra);
+        }
+        RutaAvion rutaAvion=new RutaAvion(ru.getId_ruta(),a.getId_avion());
+
+        conexion.getDaoRutaAvion().insertRutaAvion(rutaAvion);
+        List<RutaAvion> rutaAvionList=conexion.getDaoRutaAvion().verAvionRuta();
+        for(RutaAvion rutaAvion1:rutaAvionList){
+            Log.d("room","Guardado rutaAvion -> Avion: "+rutaAvion1.getId_avion()+" Ruta: "+rutaAvion1.getId_ruta());
+        }
+        //Eliminamos una ruta - Para eliminar una ruta recuerda que es sql y debes eliminar el resto primero, las relaciones donde este estos valores
+        //conexion.getDaoRuta().deleteRuta(r);
     }
 
     @Override
